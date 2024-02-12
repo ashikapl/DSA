@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "f:/github/DSA/Recursion",
-      "program": "f:/github/DSA/Recursion/build/Debug/outDebug",
+      "cwd": "f:/github/DSA/debug",
+      "program": "f:/github/DSA/debug/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
