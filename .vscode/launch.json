@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "f:/github/DSA/Divide&Conquer(week-8)/level-1(DnC)",
-      "program": "f:/github/DSA/Divide&Conquer(week-8)/level-1(DnC)/build/Debug/outDebug",
+      "cwd": "f:/github/DSA",
+      "program": "f:/github/DSA/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
