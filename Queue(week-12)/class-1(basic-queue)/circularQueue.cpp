@@ -26,7 +26,7 @@ public:
     {
         // Queue Full
         if ((front == 0 && rear == size - 1) ||
-            ((rear + 1) % size == front))
+            (rear == front - 1))
         {
             cout << "Queue is Full" << endl;
             return;
