@@ -29,7 +29,8 @@ Node* buildBST(int &i, int min, int max, vector<int>& preorder)
         root->left = buildBST(i,min,root->data,preorder);
         root->right = buildBST(i,root->data,max,preorder);
     }
-    return root;}
+    return root;
+}
 
 Node* bstFromPreorder(vector<int>& preorder) 
 {
