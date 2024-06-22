@@ -23,5 +23,52 @@ class TrieNode
 
 class Trie
 {
+    public:
+    void insert(TreeNode* root, string word, int i)
+    {
+        if(word.length() == 0)
+        {
+            isTerminal = true;
+            return;
+        }
+
+        char ch = word[0];
+        int index = ch - 'A';
+        TrieNode* child;
+        
+        if(root->children ! NULL)
+        {
+            child = root->children[index];
+        }
+        else
+        {
+            child = new TrieNode(ch);
+            root->children[index] = child;
+        }
+
+        insert(child,word.substr(1));
+    }
+
+    bool search(TrieNode* root, string word)
+    {
+        if(word.length() == 0)
+        {
+            return root->isTerminal;
+        }
     
+        char ch = word[0];
+        int index = ch - 'A';
+        TrieNode* child;
+
+        if(root->children != NULL)
+        {
+            child = root->children[index];
+        }
+        else
+        {
+            return false;
+        }
+
+        return search(child,word.substr(1));
+    }
 };
