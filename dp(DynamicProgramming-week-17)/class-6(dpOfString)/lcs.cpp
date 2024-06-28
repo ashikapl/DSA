@@ -10,8 +10,10 @@ using namespace std;
 int LCSUsingRecursion(string a, string b, int i, int j)
 {
     // base case
-    if(i == a.length()) return 0;
-    if(j == b.length()) return 0;
+    int n = a.length();
+    int m = b.length();
+    if(i == n) return 0;
+    if(j == m) return 0;
 
     int ans = 0;
     if(a[i] == b[j]) // here this two index value is match so in length we have to add 1
@@ -34,8 +36,10 @@ int LCSUsingRecursion(string a, string b, int i, int j)
 int LCSUsingMemo(string& a, string& b, int i, int j, vector<vector<int> >&dp)
 {
     // base case
-    if(i == a.length()) return 0;
-    if(j == b.length()) return 0;
+    int n = a.length();
+    int m = b.length();
+    if(i == n) return 0;
+    if(j == m) return 0;
 
     if(dp[i][j] != -1)
     {
