@@ -75,7 +75,7 @@ int LISUsingSpaceOpti(vector<int>& arr, int n )
 {
     if(n == 0) return 0;
     vector<int> currRow(n+1,0);
-    vector<int> nextRow(n+1,-1);
+    vector<int> nextRow(n+1,0);
 
     for(int curr = n-1; curr >= 0; curr--)
     {
@@ -86,13 +86,37 @@ int LISUsingSpaceOpti(vector<int>& arr, int n )
             {
                 include = 1 + nextRow[curr+1];
             }
-            int exclude = 0 + nextRowq[prev+1];
+            int exclude = 0 + nextRow[prev+1];
 
             currRow[prev+1] = max(include,exclude);
         }
         nextRow = currRow;
     }
-    return nextRow[0]
+    return nextRow[0];
+}
+
+// Further more space opimtize the code
+int LISUsingSO2(vector<int>& arr, int n)
+{
+    if(arr.size() == 0) return 0;
+    
+    vector<int> ans;
+    ans.push_back(arr[0]);
+
+    for(int i = 1; i < n; i++)
+    {
+        if(arr[i] > ans.back())
+        {
+            ans.push_back(arr[i]);
+        }
+        else
+        {
+            // curr se just choti value ans array mein find it and replace with the curr value
+            int index = lower_bound(ans.begin(), ans.end(), arr[i]) - ans.begin();
+            ans[index] = arr[i];
+        }
+    }
+    return ans.size();
 }
 
 int main()
@@ -107,7 +131,10 @@ int main()
     // vector<vector<int> > dp(n, vector<int>(n,-1));
     // int ans = LISUsingRecursion(arr,n,curr,prev,dp);
 
-    int ans = LISUsingTab(arr,n);
+    // int ans = LISUsingTab(arr,n);
+
+    // int ans = LISUsingSpaceOpti(arr,n);
+    int ans = LISUsingSO2(arr,n);
 
     cout << "Longest Increase Subsquence length is:: " << ans << endl;
 
