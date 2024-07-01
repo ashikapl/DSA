@@ -1,13 +1,15 @@
-// Best time to buy & sell - (2) Here we can buy & sell multiple times
+// Best time to buy & sell - (5) similar to (buy&sell2) Here we can buy & sell multiple times b
+// but we have to pay fee for trasactions
 // Using Recursion, Memoisation, Tabulation & space Optimize
 // TC -> O(2^n) to O(n) from recursion to tab or so
 // SC -> O(n) to O(1) from recursion to spaceOpti
+
 #include<iostream>
 #include<vector>
 using namespace std;
 
 // solve using recursion
-int buySellUsingRecursion(int prices[], int n, int i, int buy)
+int buySellUsingRecursion(vector<int>& prices, int n, int i, int buy, int& fee)
 {
     // base case
     if(i >= n) return 0;
@@ -15,14 +17,14 @@ int buySellUsingRecursion(int prices[], int n, int i, int buy)
     int profit = 0;
     if(buy)
     {
-        int buyProfit = -prices[i] + buySellUsingRecursion(prices,n,i+1,0);
-        int skipBuy = buySellUsingRecursion(prices,n,i+1,1);
+        int buyProfit = -prices[i] + buySellUsingRecursion(prices,n,i+1,0,fee);
+        int skipBuy = buySellUsingRecursion(prices,n,i+1,1,fee);
         profit = max(buyProfit,skipBuy);
     }
     else
     {
-        int sellProfit = prices[i] + buySellUsingRecursion(prices,n,i+1,1);
-        int skipSell = buySellUsingRecursion(prices,n,i+1,0);
+        int sellProfit = prices[i] + buySellUsingRecursion(prices,n,i+1,1,fee) - fee;
+        int skipSell = buySellUsingRecursion(prices,n,i+1,0,fee);
         profit = max(sellProfit,skipSell);
     }
     
@@ -30,7 +32,7 @@ int buySellUsingRecursion(int prices[], int n, int i, int buy)
 }
  
 // solve using memoisation (dp) - topDown
-int buySellUsingMem(int prices[], int n, int i, int buy, vector<vector<int> >& dp)
+int buySellUsingMem(vector<int>& prices, int n, int i, int buy, vector<vector<int> >& dp, int&fee)
 {
     // base case
     if(i >= n) return 0;
@@ -43,14 +45,14 @@ int buySellUsingMem(int prices[], int n, int i, int buy, vector<vector<int> >& d
     int profit = 0;
     if(buy)
     {
-        int buyProfit = -prices[i] + buySellUsingMem(prices,n,i+1,0,dp);
-        int skipBuy = buySellUsingMem(prices,n,i+1,1,dp);
+        int buyProfit = -prices[i] + buySellUsingMem(prices,n,i+1,0,dp,fee);
+        int skipBuy = buySellUsingMem(prices,n,i+1,1,dp,fee);
         profit = max(buyProfit,skipBuy);
     }
     else
     {
-        int sellProfit = prices[i] + buySellUsingMem(prices,n,i+1,1,dp);
-        int skipSell = buySellUsingMem(prices,n,i+1,0,dp);
+        int sellProfit = prices[i] + buySellUsingMem(prices,n,i+1,1,dp,fee) - fee;
+        int skipSell = buySellUsingMem(prices,n,i+1,0,dp,fee);
         profit = max(sellProfit,skipSell);
     }
     dp[i][buy] = profit;
@@ -59,7 +61,7 @@ int buySellUsingMem(int prices[], int n, int i, int buy, vector<vector<int> >& d
 }
 
 // Solve using Tabulation -bottom up
-int buySellUsingTab(int prices[], int n)
+int buySellUsingTab(vector<int>& prices, int n, int& fee)
 {
     vector<vector<int> >dp(n+1, vector<int>(2, 0));
 
@@ -76,7 +78,7 @@ int buySellUsingTab(int prices[], int n)
             }
             else
             {
-                int sellProfit = prices[i] + dp[i+1][1];
+                int sellProfit = prices[i] + dp[i+1][1] - fee;
                 int skipSell = dp[i+1][0];
                 profit = max(sellProfit,skipSell);
             }
@@ -92,7 +94,7 @@ int buySellUsingTab(int prices[], int n)
 // By using only two (2*2) matrix solve this question 
 // at once then update the row value for calling another two (2*2) matrix and so on.....
 // with the help of solving 2*2 matrix less space is used and easy solution
-int buySellUsingSpaceOpti(int prices[], int n)
+int buySellUsingSpaceOpti(vector<int>& prices, int n, int& fee)
 {
     vector<vector<int> >dp(n+1, vector<int>(2, 0));
 
@@ -109,7 +111,7 @@ int buySellUsingSpaceOpti(int prices[], int n)
             }
             else
             {
-                int sellProfit = prices[i] + dp[1][1];
+                int sellProfit = prices[i] + dp[1][1] - fee;
                 int skipSell = dp[1][0];
                 profit = max(sellProfit,skipSell);
             }
@@ -125,17 +127,18 @@ int buySellUsingSpaceOpti(int prices[], int n)
 
 int main()
 {
-    int prices[] = {1,2,3,4,5};
-    int n = 5;
+    vector<int> prices{1,3,2,8,4,9};
+    int n = prices.size();
+    int fee = 2;
 
-    // int ans = buySellUsingRecursion(prices,n,0,true);
+    // int ans = buySellUsingRecursion(prices,n,0,true,fee);
 
     // vector<vector<int> > dp(n, vector<int>(2,-1));
-    // int ans = buySellUsingMem(prices,n,0,true,dp);
+    // int ans = buySellUsingMem(prices,n,0,true,dp,fee);
 
-    // int ans = buySellUsingTab(prices,n);
+    // int ans = buySellUsingTab(prices,n,fee);
 
-    int ans = buySellUsingSpaceOpti(prices,n);
+    int ans = buySellUsingSpaceOpti(prices,n,fee);
 
     cout << "Maximum Profit is:: " << ans << endl;
 
