@@ -87,6 +87,32 @@ int LCSUsingTab(string& a, string& b)
     return dp[0][0];
 }
 
+int LCSUsingSpaceOpti(string& a, string& b)
+{
+    vector<int> curr(a.length()+1, 0);
+    vector<int> next(b.length()+1, 0);
+     
+    for(int i = a.length()-1; i >= 0; i--)
+    {
+        for(int j = b.length()-1; j >= 0; j--)
+        {
+            int ans = 0;
+            if(a[i] == b[j])
+            {
+                ans = 1 + next[j+1]; 
+            }
+            else
+            {
+                ans = 0 + max(next[j],curr[j+1]);
+            }
+            
+            curr[j] = ans;
+        }
+        next = curr;
+    } 
+    return next[0];
+}
+
 int main()
 {
     string a = "abcde";
@@ -100,7 +126,9 @@ int main()
     // vector<vector<int> >dp(a.length(), vector<int>(b.length(), -1));
     // int ans = LCSUsingMemo(a,b,i,j,dp);
 
-    int ans = LCSUsingTab(a,b);
+    // int ans = LCSUsingTab(a,b);
+
+    int ans = LCSUsingSpaceOpti(a,b);
 
     cout << "Longest Common Subsequence length:- " << ans << endl;
 
