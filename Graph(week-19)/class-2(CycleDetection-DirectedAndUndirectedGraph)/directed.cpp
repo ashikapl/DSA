@@ -53,6 +53,52 @@ public:
         DFSVisited[src] = false;
         return false;
     }
+
+    // BFS -> by Kahn's algorithm (Topological Sort)(same code) only ans.size() != n then cycle present
+    // where n is the size of graph or nodes in the graph
+    void topoSortUsingBFS(int n, vector<int>& ans)
+    {
+        queue<int> q;
+        unordered_map<int, int> indegree;
+
+        // calculate the indegree
+        for(auto i : adjList)
+        {
+            int src = i.first;
+            for(auto nbr : i.second)
+            {
+                indegree[nbr]++;
+            }
+        }
+
+        // put all the nodes into the queue whose indegree is 0
+        for(int i = 0; i < n; i++)
+        {
+            if(indegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+
+        // bfs logic
+        while(!q.empty())
+        {
+            int fNode = q.front();
+            q.pop();
+
+            ans.push_back(fNode);
+            // here we can do count also in cycle detection problem of bfs
+
+            for(auto nbr : adjList[fNode])
+            {
+                indegree[nbr]--;
+                if(indegree[nbr] == 0)
+                {
+                    q.push(nbr);
+                }
+            }
+        }
+    }
 };
 
 int main() {
@@ -63,7 +109,7 @@ int main() {
     g.createEdges(0, 2, 1);
     g.createEdges(2, 3, 1);
     g.createEdges(2, 4, 1);
-    g.createEdges(4, 2, 0); // This would create a cycle
+    g.createEdges(4, 2, 0);// This would create a cycle
 
     g.printAdjList();
     cout << endl;
@@ -86,6 +132,22 @@ int main() {
         cout << "Cycle is Present in directed Graph!" << endl;
     } else {
         cout << "Cycle is Absent!" << endl;
+    }
+
+    vector<int> result;
+    g.topoSortUsingBFS(n, result);
+    // here is no. of nodes in the graph or size of the graph
+    // if ans.size() == n then is topo sort but not a cycle
+    // and if ans.size() != n then, it is invalid topo sort and cycle is present
+    // BFS is solved by kahn's algorithm by(Topological Sort)
+
+    if(result.size() == n)
+    {
+        cout << "Its a valid Topo Sort there is no cycle present!" << endl;
+    }
+    else
+    {
+        cout << "Cycle present it is an invalid Topo Sort" << endl;
     }
 
     return 0;
