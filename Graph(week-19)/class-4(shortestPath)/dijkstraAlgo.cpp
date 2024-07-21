@@ -1,5 +1,8 @@
 // Dijkstra Alogrithm -> To find the shortest path from the src node to every other node in the graph
 // In undirected weighted graph in linear time complexity
+// It can also apply in directed weight graph
+// In undirected negative weight graph can make cycle or (infinite loop) so dijkstra algo can't apply
+// TC -> O((V+E)logV)
 #include<iostream>
 #include<unordered_map>
 #include<set>
@@ -95,14 +98,14 @@ int main()
     Graph g;
 
     int n = 8;
-    g.createEdges(1,2,2,0);
-    g.createEdges(1,4,6,0);
-    g.createEdges(1,5,11,0);
-    g.createEdges(2,3,7,0);
-    g.createEdges(3,6,4,0);
-    g.createEdges(4,6,8,0);
-    g.createEdges(5,7,3,0);
-    g.createEdges(6,7,1,0);
+    g.createEdges(1,2,2,1);
+    g.createEdges(1,4,6,1);
+    g.createEdges(1,5,11,1);
+    g.createEdges(2,3,7,1);
+    g.createEdges(3,6,4,1);
+    g.createEdges(4,6,8,1);
+    g.createEdges(5,7,3,1);
+    g.createEdges(6,7,1,1);
     // g.createEdges(5,4,6,0);
 
     g.dijkstraAlgo(1, n);
