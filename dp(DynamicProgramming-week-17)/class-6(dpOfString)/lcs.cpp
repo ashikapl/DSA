@@ -64,7 +64,7 @@ int LCSUsingMemo(string& a, string& b, int i, int j, vector<vector<int> >&dp)
 // Tabulation Approach 
 int LCSUsingTab(string& a, string& b)
 {
-    vector<vector<int> >dp(a.length()+1, vector<int>(b.length()+1, 0));
+    vector<vector<int>> dp(a.length()+1, vector<int>(b.length()+1, 0));
 
     for(int i = a.length()-1; i >= 0; i--)
     {
