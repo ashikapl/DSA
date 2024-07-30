@@ -1,4 +1,4 @@
-// Kruskal's Algorithm -> finding the minimum spanning tree
+// Kruskal's Algorithm(Disjoint Set) -> finding the minimum spanning tree
 #include<iostream>
 #include<vector>
 #include<algorithm>
