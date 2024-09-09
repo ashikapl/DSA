@@ -15,13 +15,13 @@ bool isPalindrome(string &s, int start, int end)
     return true;
 }
 
-string longestPalindrome(string s)
+string longestPalindrome(string s, int n)
 {
     string ans = "";
 
-    for (int i = 0; i < s.size(); i++)
+    for (int i = 0; i < n; i++)
     {
-        for (int j = i; i < s.size(); j++)
+        for (int j = i; j < n; j++)
         {
             if (isPalindrome(s, i, j))
             {
@@ -36,8 +36,10 @@ string longestPalindrome(string s)
 int main()
 {
     string s = "babad";
+    int n = s.length();
 
-    longestPalindrome(s);
+    string ans = longestPalindrome(s,n);
+    cout << ans << endl;
 
     return 0;
 }
